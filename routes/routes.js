@@ -12,7 +12,13 @@ var rutas = function(app){
 
 
 	app.get('/home', function (req, res){
-		res.render('index',{
+		res.render('home',{
+			usuario : req.session.passport.user.nombre
+		});
+	});
+
+	app.get('/upload', function (req, res){
+		res.render('upload',{
 			usuario : req.session.passport.user.nombre
 		});
 	});
