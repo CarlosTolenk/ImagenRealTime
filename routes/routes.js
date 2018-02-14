@@ -11,7 +11,7 @@ var rutas = function(app){
 	});
 
 
-	app.get('/chat', function (req, res){
+	app.get('/home', function (req, res){
 		res.render('index',{
 			usuario : req.session.passport.user.nombre
 		});

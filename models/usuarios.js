@@ -1,7 +1,7 @@
 var models = require('./models'),
 	Schema = models.Schema;
 
-//var mongooseRedisCache = require('mongoose-redis-cache');
+var mongooseRedisCache = require('mongoose-redis-cache');
 
 var usuariosSchema = new Schema({
 	nombre : String,
@@ -10,9 +10,9 @@ var usuariosSchema = new Schema({
 	twitter : String
 });
 
-//usuariosSchema.set('redisCache', true);
+usuariosSchema.set('redisCache', true);
 
-//mongooseRedisCache(models);
+mongooseRedisCache(models);
 var Usuario = models.model('Usuario', usuariosSchema, 'usuario_sesion');
 
 module.exports = Usuario;

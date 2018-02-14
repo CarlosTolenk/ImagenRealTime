@@ -1,41 +1,42 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
-var redis = require('redis');
-var client = redis.createClient();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const redis = require('redis');
+const client = redis.createClient();
 
 //Aquí almacenamos las variables de sesión
-var session = require('express-session');
-var RedisStore = require('connect-redis')(session);
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 
 //Passport
-var passport = require('passport');
+const passport = require('passport');
 
 //Flash para enviar mensajes temporales como respuesta
 var flash = require('connect-flash');
 
 //Logger de peticiones http
-var logger = require('morgan');
+const logger = require('morgan');
 //Parsea las cookies y pobla el objeto req.cookies con un objeto de llaves, que tiene el nombre de la cookie
-var cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 //Parsea el cuerpo de las peticiones y respuestas http
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
-var path = require('path');
-var _ = require('lodash');
+const path = require('path');
+const _ = require('lodash');
+const port = process.env.PORT || 3000;
 
 
 //Requerimos Swig
-var swig = require('swig');
+const swig = require('swig');
 
 var usuarios = [];
 var clientes = {};
 //var mensajes = [];
 
-var Usuario = require('./models/usuarios');
-var Mensaje = require('./models/mensajes');
+const Usuario = require('./models/usuarios');
+const Mensaje = require('./models/mensajes');
 /**************Configuración**************/
 
 //Con esto le decimos a express, que motor de template utilizar, a lo que asignamos Swig.
@@ -83,7 +84,7 @@ passport.deserializeUser(function(obj, done) {
 var routes = require('./routes/routes');
 routes(app);
 
-//Connections 
+//Connections
 var local = require('./connections/local');
 local(app);
 var twitter = require('./connections/twitter');
@@ -101,11 +102,11 @@ function storeMessages(usuario, mensaje){
     if (err) {console.log(err);}
     console.log(mensaje);
   });
-  
+
 }
 
 io.on('connection', function(socket){
-  
+
   socket.on('disconnect', function(){
     console.log('user disconnected');
     client.hdel("usuarios", socket.id);
@@ -113,9 +114,9 @@ io.on('connection', function(socket){
 
   socket.on('chat message', function(msj){
   	var match = /@([^@]+)@/.exec(msj.mensaje);
-  	  
+
   		if (match != null) {
-         
+
         client.hgetall("usuarios", function(err, usuarios){
           _.forEach(usuarios, function(x,y){
             console.log(x,y);
@@ -125,7 +126,7 @@ io.on('connection', function(socket){
             }
           });
 
-          
+
         });
 
   		}else{
@@ -152,10 +153,8 @@ io.on('connection', function(socket){
     });
   });
 
-});	
-
-server.listen(3000, function(){
-	console.log('Servidor corriendo en el puerto 3000');
 });
 
-
+server.listen(port, () => {
+	console.log(`Servidor corriendo en el puerto ${port}`);
+});

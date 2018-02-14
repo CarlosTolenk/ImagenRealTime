@@ -1,6 +1,5 @@
 var Usuario = require('../models/usuarios');
 
-
 exports.registro = function(req, res, next){
 	var user = new Usuario({
 		nombre : req.body.nombre,
@@ -18,5 +17,3 @@ exports.registro = function(req, res, next){
 		}
 	});
 };
-
-

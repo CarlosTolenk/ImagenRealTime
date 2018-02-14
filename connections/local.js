@@ -1,10 +1,10 @@
-var passport = require('passport'),
-	passportLocal = require('passport-local'),
-	LocalStrategy = passportLocal.Strategy;
+const passport = require('passport'),
+	   	passportLocal = require('passport-local'),
+			LocalStrategy = passportLocal.Strategy;
 
-var Usuario = require('../models/usuarios');
+const Usuario = require('../models/usuarios');
 
-var localConnection = function (app){
+let localConnection = function (app){
 
 	passport.use('user', new LocalStrategy({
 		usernameField : 'usuario',
@@ -13,18 +13,18 @@ var localConnection = function (app){
 	  function (username, password, done) {
 	    Usuario.findOne({ usuario: username }, function(err, user) {
 	      	if (err) { return done(err); }
-	      	
+
 
 	      	if (!user) {
 
 	        	return done(null, false, { message: 'Incorrect username.' });
-			        
+
 	      	}else{
 
 		    	if (user.password != password) {
 
 						return done(null, false, { message: 'Incorrect password.' });
-	            	
+
 	        	}else{
 	        		return done(null, user);
 	        	}
@@ -33,7 +33,7 @@ var localConnection = function (app){
 	  }
 	));
 
-	app.post('/login', passport.authenticate('user', {  successRedirect: '/chat', failureRedirect: '/error', failureFlash: 'Usuario o contraseña erróneos'}));
+	app.post('/login', passport.authenticate('user', {  successRedirect: '/home', failureRedirect: '/error', failureFlash: 'Usuario o contraseña erróneos'}));
 
 };
 

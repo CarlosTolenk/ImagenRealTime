@@ -1,8 +1,8 @@
-var passport = require('passport'),
-	passportTwitter = require('passport-twitter'),
-	TwitterStrategy = passportTwitter.Strategy;
+const passport = require('passport'),
+			passportTwitter = require('passport-twitter'),
+			TwitterStrategy = passportTwitter.Strategy;
 
-var Usuario = require('../models/usuarios');
+const Usuario = require('../models/usuarios');
 
 var twitterConnection = function (app) {
 	passport.use(
@@ -40,7 +40,7 @@ var twitterConnection = function (app) {
 						done(null, user);
 					});
 				}else{
-					
+
 					return done(err, user);
 				}
 			});
