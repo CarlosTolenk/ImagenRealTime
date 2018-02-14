@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+   
+<!--[if IE]>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<![endif]-->
+<title>BOOTSTRAP CHAT EXAMPLE</title>
+<!-- BOOTSTRAP CORE STYLE CSS -->
+<link href="/assets/css/bootstrap.css" rel="stylesheet" />
+
+</head>
+<body style="font-family:Verdana">
+    <div class="container">
+        <div class="row " style="padding-top:40px;">
+            <h3 class="text-center" >BOOTSTRAP CHAT EXAMPLE </h3>
+            <br /><br />
+            <div class="col-md-8">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        RECENT CHAT HISTORY
+                    </div>
+                    <div class="panel-body">
+                        <ul class="media-list" id="cuerpo-chat">
+                            
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <form id="form">
+                            <div class="input-group">
+                                <input type="text" id="message" name="message" class="form-control" placeholder="Enter Message" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="submit">SEND</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        ONLINE USERS
+                    </div>
+                    <div class="panel-body">
+                        <ul class="media-list" id="cuerpo-online">
+
+                            
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+     <script>
+      var socket = io();
+      /*var usuario = prompt("Escribe tu nombre!", "Incognito");
+      if (usuario != null) {
+        socket.emit('new user', usuario);
+      }*/
+     var usuario = {{usuario | json_encode | safe }};
+     socket.emit('new user', usuario);
+
+      $('#form').submit(function(event){
+
+        socket.emit('chat message', { usuario : usuario, mensaje : $('#message').val() });
+        $('#message').val('');
+        return false;
+      });
+
+        socket.on('chat message', function(msg){
+            
+            $('#cuerpo-chat').append($('<li>').html('<strong>'+msg.usuario+'</strong>: '+msg.mensaje));
+        });
+
+        socket.on('new user', function(usuarios){
+            $('#cuerpo-online').html('');
+            $.each(usuarios, function(i, usuario){
+                $('#cuerpo-online').append($('<li>').text(usuario));
+            });
+        }); 
+       
+    </script>
+</body>
+</html>
