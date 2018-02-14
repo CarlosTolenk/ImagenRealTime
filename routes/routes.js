@@ -1,4 +1,5 @@
 var usuario = require('../controllers/usuario');
+//var imagen = require('../controllers/imagen');
 
 var rutas = function(app){
 
@@ -31,6 +32,11 @@ var rutas = function(app){
 	app.post('/registro', usuario.registro, function(req, res){
 		res.redirect('/');
 	});
+
+	/*app.post('/upload', imagen.uploadImagen, function (req, res) {
+		res.redirect('/');
+	});
+	*/
 };
 
 module.exports = rutas;
