@@ -2,6 +2,22 @@
 
 
 {% block content %}
-	Subir Imagenes
-  <button type="button" class="btn btn-primary">Primary</button>
+<div class="col-md-10 container-upload">
+  <h1>Subir Imagenes</h1>
+      <form enctype="multipart/form-data" role="form" action="/upload" method="POST">
+          <div class="form-group">
+              <input id="file-1" type="file" class="file" multiple=true data-preview-file-type="any">
+          </div>
+          <div class="form-group">
+              <button class="btn btn-primary">Submit</button>
+              <button class="btn btn-default" type="reset">Reset</button>
+          </div>
+      </form>
+</div>
+
+
+
+
+
+
 {% endblock %}
