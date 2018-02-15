@@ -160,6 +160,8 @@ io.on('connection', function(socket){
 // Código para subir imágenes
 var multipart = require('connect-multiparty');
 app.use(multipart());
+
+
 /*
 app.post('/upload', function (req, res) {
   if(req.files.miarchivo){

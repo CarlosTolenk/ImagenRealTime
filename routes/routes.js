@@ -1,5 +1,7 @@
 var usuario = require('../controllers/usuario');
 var imagen = require('../controllers/imagen');
+const express = require('express');
+const app = express();
 
 var rutas = function(app){
 
@@ -34,7 +36,7 @@ var rutas = function(app){
 	});
 
 	app.post('/upload', imagen.uploadImagen, function (req, res) {
-		res.redirect('/');
+		res.redirect('/home');
 	});
 
 };
