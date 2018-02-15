@@ -1,7 +1,6 @@
 var usuario = require('../controllers/usuario');
 var imagen = require('../controllers/imagen');
-const express = require('express');
-const app = express();
+
 
 var rutas = function(app){
 
@@ -15,7 +14,7 @@ var rutas = function(app){
 
 
 	app.get('/home', function (req, res){
-		res.render('home',{
+		res.render('home', {
 			usuario : req.session.passport.user.nombre
 		});
 	});
@@ -24,6 +23,11 @@ var rutas = function(app){
 		res.render('upload',{
 			usuario : req.session.passport.user.nombre
 		});
+	});
+
+	app.get('/galery' , imagen.readImagen, function(req, res){
+			 imagen = req.body.imagenes;
+			 res.send(imagen);
 	});
 
 	app.get('/error', function (req, res){
@@ -35,7 +39,7 @@ var rutas = function(app){
 		res.redirect('/');
 	});
 
-	app.post('/upload', imagen.uploadImagen, function (req, res) {
+	app.post('/upload', imagen.uploadImagen, function (req, res, next) {
 		res.redirect('/home');
 	});
 

@@ -1,31 +1,33 @@
-
-const express = require('express');
-const app = express();
-const path = require('path');
+//Importo el Schema de las imagenes y el modulo fileSystems.
 const Imagen = require('../models/imagenes');
 const fs = require('fs');
 
 
-exports.leerImagen = function(req, res, next){
 
-Imagen.find({}, function(err, imagenes){
+// Funcion para leer los datos de la base de dato y enviarselo a la ruta.
+exports.readImagen = function(req, res, next){
 
-    if(err){
-      res.send("Ocurrió error obteniendo las imagenes");
+    Imagen.find({}, function(err, imagenes){
 
-    }else{
-      res.send(imagenes);
-    }
-  });
-  next();
-};
+        if(err){
+          res.send("A problem has occurred when obtaining the images");
+
+        }else{
+          console.log(imagenes);
+          res.send(imagenes);
+        }
+      });
+      next();
+    };
 
 exports.uploadImagen = function(req, res, next){
 
+  let respuesta = req.files;
 
+console.log("Esto traer req.file " + respuesta);
 
 	var imagen = new Imagen({
-		nombre : req.body.nombre,
+		//nombre : req.files.nombre,
 		//imagen : req.body.miarchivo
 	});
 
