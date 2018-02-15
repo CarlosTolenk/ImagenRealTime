@@ -160,7 +160,7 @@ io.on('connection', function(socket){
 // Código para subir imágenes
 var multipart = require('connect-multiparty');
 app.use(multipart());
-
+/*
 app.post('/upload', function (req, res) {
   if(req.files.miarchivo){
     var tipo = req.files.miarchivo.type;
@@ -177,7 +177,7 @@ app.post('/upload', function (req, res) {
           }
           fs.unlink(tmpPath, function (err) {
             // res.send('El usuario: <strong>' + req.session.passport.user.usuario + '</strong>  subió imagen: <br><a href="/index"><img src="./uploads/'+nombreArchivo+'" />');
-              res.render('upload', {
+              res.render('home', {
                 src:'./uploads/'+nombreArchivo,
                 usuario: req.session.passport.user.usuario
               });
@@ -190,7 +190,7 @@ app.post('/upload', function (req, res) {
     res.send('No se adjunto archivo.');
   }
 });
-
+*/
 server.listen(port, () => {
 	console.log(`Servidor corriendo en el puerto ${port}`);
 });

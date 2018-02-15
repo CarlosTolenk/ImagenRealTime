@@ -1,5 +1,5 @@
 var usuario = require('../controllers/usuario');
-//var imagen = require('../controllers/imagen');
+var imagen = require('../controllers/imagen');
 
 var rutas = function(app){
 
@@ -33,10 +33,10 @@ var rutas = function(app){
 		res.redirect('/');
 	});
 
-	/*app.post('/upload', imagen.uploadImagen, function (req, res) {
+	app.post('/upload', imagen.uploadImagen, function (req, res) {
 		res.redirect('/');
 	});
-	*/
+
 };
 
 module.exports = rutas;

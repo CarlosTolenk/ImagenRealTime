@@ -1,6 +1,21 @@
 var Imagen = require('../models/imagenes');
 
+exports.leerImagen = function(req, res, next){
+
+Imagen.find({}, function(err, imagenes){
+
+  if(err){
+    res.send("Ocurrió error obteniendo las imagenes");
+
+  }else{
+    res.send(imagenes);
+  }
+  });
+  next();
+};
+
 exports.uploadImagen = function(req, res, next){
+
   if(req.files.miarchivo){
     var tipo = req.files.miarchivo.type;
     if (tipo == 'image/png' || tipo == 'image/jpg' || tipo == 'image/gif' || tipo == 'image/jpeg') {
@@ -16,7 +31,7 @@ exports.uploadImagen = function(req, res, next){
           }
           fs.unlink(tmpPath, function (err) {
             // res.send('El usuario: <strong>' + req.session.passport.user.usuario + '</strong>  subió imagen: <br><a href="/index"><img src="./uploads/'+nombreArchivo+'" />');
-              res.render('upload', {
+              res.render('home', {
                 src:'./uploads/'+nombreArchivo,
                 usuario: req.session.passport.user.usuario
               });
@@ -28,4 +43,20 @@ exports.uploadImagen = function(req, res, next){
   } else {
     res.send('No se adjunto archivo.');
   }
-  };
+
+
+	var imagen = new Imagen({
+		nombre : req.files.miarchivo.name,
+		imagen : req.files.miarchivo.path
+	});
+
+	user.save(function (err, imagen){
+		if (!err) {
+			res.status(201);
+			next();
+		}else{
+			res.status(500);
+			res.send('Ha ocurrido un problema!');
+		}
+	});
+};

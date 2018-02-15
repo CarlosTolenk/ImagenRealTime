@@ -3,7 +3,7 @@ var models = require('./models'),
 Schema = models.Schema;
 
 var imagenSchema = new Schema({
-  usuario: String,
+  nombre: String,
   imagen: String
 });
 
